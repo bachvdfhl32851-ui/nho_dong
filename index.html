@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Văn Học: Nhớ Đồng - Tố Hữu (Ngữ Văn 11)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Merriweather & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vintage: {
+                            50: '#fcfaf6',
+                            100: '#f7f2e7',
+                            200: '#efe3cf',
+                            300: '#e1cdb0',
+                            400: '#ceaf8c',
+                            500: '#b8906b',
+                            600: '#a37957',
+                            700: '#855f44',
+                            800: '#6d4e3a',
+                            900: '#573f31',
+                            dark: '#2c1e16'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'serif'],
+                        title: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f7f2e7;
+            background-image: radial-gradient(#ceaf8c 0.75px, transparent 0.75px), radial-gradient(#ceaf8c 0.75px, #f7f2e7 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            font-family: 'Merriweather', serif;
+            color: #422f24;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #efe3cf;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a37957;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #855f44;
+        }
+
+        /* Card Paper Effect */
+        .paper-card {
+            background: #fcfaf6;
+            box-shadow: 0 10px 30px -5px rgba(66, 47, 36, 0.15), 0 0 5px rgba(0,0,0,0.05);
+            border: 1px solid #e1cdb0;
+            position: relative;
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px solid #efe3cf;
+            pointer-events: none;
+            border-radius: 0.5rem;
+        }
+
+        /* Custom Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .option-btn {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(6px);
+            background-color: #efe3cf;
+            border-color: #b8906b;
+        }
+
+        /* Stamp ornament */
+        .stamp-border {
+            border: 2px dashed #b8906b;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 flex flex-col justify-between items-center selection:bg-vintage-300 selection:text-vintage-900">
+
+    <!-- Audio Player (Web Audio API synth simulation) -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="sound-toggle" onclick="toggleAmbience()" class="flex items-center gap-2 px-3 py-2 rounded-full bg-vintage-200 border border-vintage-400 text-vintage-800 text-xs font-semibold hover:bg-vintage-300 transition shadow-md">
+            <i class="fa-solid fa-volume-xmark text-vintage-700" id="sound-icon"></i>
+            <span id="sound-text">Âm thanh thiên nhiên</span>
+        </button>
+    </div>
+
+    <div class="w-full max-w-3xl my-auto">
+        
+        <!-- Header Banner -->
+        <header class="text-center mb-8 fade-in">
+            <div class="inline-block mb-3">
+                <span class="text-xs uppercase tracking-widest text-vintage-700 font-bold px-4 py-1 bg-vintage-200 rounded-full border border-vintage-300">
+                    <i class="fa-solid fa-book-bookmark mr-1"></i> Ngữ Văn 11 - Tố Hữu
+                </span>
+            </div>
+            <h1 class="font-title text-4xl sm:text-5xl font-extrabold text-vintage-900 tracking-tight mb-2">
+                NHỚ ĐỒNG
+            </h1>
+            
+            <!-- Quotation Box -->
+            <div class="mt-4 max-w-xl mx-auto p-4 bg-vintage-100/80 rounded-lg border-l-4 border-vintage-600 shadow-inner text-left relative">
+                <i class="fa-solid fa-quote-left text-vintage-300 text-3xl absolute top-2 right-3"></i>
+                <p class="font-serif italic text-vintage-800 text-sm sm:text-base leading-relaxed">
+                    "Gì sâu bằng những trưa thương nhớ<br>
+                    Hiu hắt hàng cây đọc phủ vàng<br>
+                    Gì sâu bằng những trưa hiu quạnh<br>
+                    Ôi ruộng đồng quê thương nhớ ơi..."
+                </p>
+                <div class="text-right text-xs text-vintage-600 font-bold mt-2">— Trích <i>Nhớ đồng</i> (Tố Hữu)</div>
+            </div>
+        </header>
+
+        <!-- Main Container Card -->
+        <main class="paper-card rounded-2xl p-6 sm:p-10 transition-all duration-300">
+            
+            <!-- QUIZ SCREEN -->
+            <div id="quiz-screen" class="fade-in">
+                <!-- Progress & Stats Bar -->
+                <div class="flex flex-wrap justify-between items-center pb-5 mb-6 border-b border-vintage-200 gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-vintage-600 inline-block animate-pulse"></span>
+                        <span id="question-tracker" class="font-title font-bold text-vintage-900 text-base sm:text-lg">
+                            Câu hỏi 1 / 10
+                        </span>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full sm:w-48 bg-vintage-200 h-2.5 rounded-full overflow-hidden border border-vintage-300 order-last sm:order-none">
+                        <div id="progress-bar" class="bg-vintage-600 h-full transition-all duration-500 ease-out" style="width: 10%;"></div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs uppercase font-bold text-vintage-600 tracking-wider">Điểm số:</span>
+                        <span id="score-badge" class="px-3 py-1 bg-vintage-700 text-vintage-50 font-bold rounded-lg text-sm shadow-sm">
+                            0 / 10
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Question Title -->
+                <div class="mb-6">
+                    <h2 id="question-text" class="text-lg sm:text-xl font-bold text-vintage-900 leading-snug font-serif">
+                        <!-- Content Injected by JS -->
+                    </h2>
+                </div>
+
+                <!-- Multiple Choice Options -->
+                <div id="options-container" class="space-y-3 mb-6">
+                    <!-- Dynamic Buttons -->
+                </div>
+
+                <!-- Feedback & Explanation Box (Initially Hidden) -->
+                <div id="feedback-container" class="hidden rounded-xl p-5 mb-6 fade-in border">
+                    <div class="flex items-start gap-3">
+                        <div id="feedback-icon" class="text-2xl mt-0.5"></div>
+                        <div class="flex-1">
+                            <h4 id="feedback-title" class="font-title font-bold text-base mb-1"></h4>
+                            <p id="explanation-text" class="text-sm leading-relaxed font-serif"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Question Action Button -->
+                <div class="flex justify-end pt-2">
+                    <button id="next-btn" onclick="nextQuestion()" disabled 
+                        class="w-full sm:w-auto px-8 py-3 bg-vintage-300 text-vintage-500 font-bold rounded-xl shadow cursor-not-allowed opacity-60 flex items-center justify-center gap-2 transition duration-200">
+                        <span>Câu Tiếp Theo</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN (Initially Hidden) -->
+            <div id="result-screen" class="hidden text-center py-6 fade-in">
+                <div class="stamp-border inline-block rounded-full mb-6">
+                    <div class="w-24 h-24 rounded-full bg-vintage-200 border-2 border-vintage-600 flex items-center justify-center mx-auto text-vintage-800">
+                        <i class="fa-solid fa-award text-4xl"></i>
+                    </div>
+                </div>
+
+                <h2 class="font-title text-3xl sm:text-4xl font-bold text-vintage-900 mb-2">Hoàn Thành Bài Thi!</h2>
+                <p class="text-vintage-700 text-sm sm:text-base mb-6 font-serif">Bạn đã vượt qua 10 câu hỏi trắc nghiệm tác phẩm "Nhớ đồng"</p>
+
+                <!-- Score Box -->
+                <div class="max-w-xs mx-auto bg-vintage-100 border border-vintage-300 rounded-2xl p-6 shadow-inner mb-6">
+                    <span class="text-xs uppercase font-bold text-vintage-600 tracking-widest block mb-1">Kết quả của bạn</span>
+                    <div class="font-title text-5xl font-extrabold text-vintage-900 my-2" id="final-score-display">
+                        0/10
+                    </div>
+                    <div class="text-xs text-vintage-700 font-semibold" id="accuracy-rate">Chính xác 0%</div>
+                </div>
+
+                <!-- Review / Evaluation Message -->
+                <div id="evaluation-box" class="p-5 rounded-xl border mb-8 text-left bg-vintage-50 border-vintage-300 max-w-xl mx-auto shadow-sm">
+                    <h3 class="font-title font-bold text-vintage-900 text-base mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-comment-dots text-vintage-600"></i> Đánh giá năng lực:
+                    </h3>
+                    <p id="evaluation-text" class="text-sm text-vintage-800 leading-relaxed font-serif"></p>
+                </div>
+
+                <!-- Restart Button -->
+                <button onclick="restartQuiz()" class="px-8 py-3.5 bg-vintage-700 hover:bg-vintage-800 text-vintage-50 font-bold rounded-xl shadow-lg transition duration-200 transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Làm Lại Bài Trắc Nghiệm</span>
+                </button>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 text-xs text-vintage-700 font-serif">
+            <p>© Trắc nghiệm Ngữ văn 11 — Thiết kế phong cách hoài niệm Nhớ Đồng</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // 10 Questions Data with Detailed Explanations
+        const questionsData = [
+            {
+                question: "Câu 1. Nhan đề \"Nhớ đồng\" thể hiện cảm xúc chủ đạo nào của nhân vật trữ tình?",
+                options: [
+                    "A. Nỗi buồn trước sự thay đổi của thiên nhiên.",
+                    "B. Nỗi nhớ quê hương, đồng ruộng và nhân dân.",
+                    "C. Sự tiếc nuối về tuổi thơ đã qua.",
+                    "D. Nỗi cô đơn trước những mất mát cá nhân."
+                ],
+                correct: 1, // Choice B
+                explanation: "Nhan đề 'Nhớ đồng' bao quát cảm xúc chủ đạo của bài thơ: đó là nỗi nhớ da diết của nhà thơ khi ở trong tù hướng về quê hương, cảnh sắc đồng ruộng và con người lao động tha thiết."
+            },
+            {
+                question: "Câu 2. Các khổ thơ 1, 4, 7 và 13 có điểm chung nào?",
+                options: [
+                    "A. Đều kể lại những sự việc trong quá khứ.",
+                    "B. Đều miêu tả hình ảnh người lao động.",
+                    "C. Đều sử dụng mô típ “Gì sâu bằng...!”",
+                    "D. Đều tập trung miêu tả cảnh lao tù."
+                ],
+                correct: 2, // Choice C
+                explanation: "Các khổ thơ 1, 4, 7, 13 được lặp lại theo mô típ cảm thán 'Gì sâu bằng...!' tạo nên khúc dạo đầu điệp khúc, xoáy sâu vào nỗi nhớ thương, hiu quạnh khắc khoải của tâm hồn tác giả."
+            },
+            {
+                question: "Câu 3. Từ “đâu” được lặp lại nhiều lần trong bài thơ có tác dụng chủ yếu gì?",
+                options: [
+                    "A. Tạo cảm giác vui tươi, phấn khởi.",
+                    "B. Nhấn mạnh sự xa vắng, khắc khoải và nỗi nhớ.",
+                    "C. Miêu tả sự chuyển động của cảnh vật.",
+                    "D. Tạo sự đối lập giữa các nhân vật."
+                ],
+                correct: 1, // Choice B
+                explanation: "Điệp từ 'đâu' vang lên như những câu hỏi dồn dập, bộc lộ sự tìm kiếm trong vô vọng, qua đó nhấn mạnh sự xa vắng, khoảng cách không gian ngục tù và nỗi nhớ cháy lòng."
+            },
+            {
+                question: "Câu 4. Hệ thống hình ảnh trong bài thơ chủ yếu được triển khai theo hướng nào?",
+                options: [
+                    "A. Từ con người đến thiên nhiên rồi đến xã hội.",
+                    "B. Từ hiện tại đến tương lai, sau đó trở về quá khứ.",
+                    "C. Từ cảnh vật đến con người rồi hướng vào tâm trạng.",
+                    "D. Từ những sự kiện lớn đến những câu chuyện nhỏ."
+                ],
+                correct: 2, // Choice C
+                explanation: "Mạch liên tưởng của bài thơ đi từ những bức tranh cảnh vật đồng quê bình dị, đến hình ảnh những con người lao động lam lũ, và cuối cùng đọng lại ở chiều sâu tâm trạng cùng lí tưởng cách mạng."
+            },
+            {
+                question: "Câu 5. Hình ảnh đồng quê trong bài thơ mang ý nghĩa biểu tượng nào sâu sắc nhất?",
+                options: [
+                    "A. Sự giàu có và thịnh vượng của đất nước.",
+                    "B. Quê hương, cuộc sống tự do và sự gắn bó với nhân dân.",
+                    "C. Những thay đổi của thiên nhiên theo mùa.",
+                    "D. Sự bình yên tách biệt với cuộc sống xã hội."
+                ],
+                correct: 1, // Choice B
+                explanation: "Đồng quê không chỉ là cảnh sắc thiên nhiên mà là biểu tượng cho cuộc sống tự do bên ngoài nhà tù, nơi gắn bó máu thịt với nhân dân lao động cần cù."
+            },
+            {
+                question: "Câu 6. Việc luân phiên câu hỏi, câu kể và câu cảm trong tác phẩm có tác dụng gì?",
+                options: [
+                    "A. Làm cho bài thơ mang tính tự sự là chủ yếu.",
+                    "B. Tạo nhịp điệu linh hoạt, thể hiện diễn biến cảm xúc.",
+                    "C. Giúp các hình ảnh thiên nhiên trở nên chân thực hơn.",
+                    "D. Làm giảm tính biểu cảm của bài thơ."
+                ],
+                correct: 1, // Choice B
+                explanation: "Sự kết hợp linh hoạt giữa các hình thức câu giúp thể hiện sinh động từng làn sóng cảm xúc từ trăn trở, ngập ngừng đến dâng trào mãnh liệt trong tâm hồn nhà thơ."
+            },
+            {
+                question: "Câu 7. Đâu là đặc điểm nổi bật trong tâm hồn nhân vật trữ tình?",
+                options: [
+                    "A. Chỉ quan tâm đến nỗi đau và lợi ích cá nhân.",
+                    "B. Mong muốn rời xa cuộc sống và con người.",
+                    "C. Giàu tình yêu quê hương, gắn bó với nhân dân và có lí tưởng cách mạng.",
+                    "D. Hoài niệm quá khứ nhưng không có khát vọng tương lai."
+                ],
+                correct: 2, // Choice C
+                explanation: "Tâm hồn nhân vật trữ tình (người chiến sĩ trẻ Tố Hữu) ngập tràn tình yêu tha thiết với quê hương, sự thấu hiểu sâu sắc với nhân dân và niềm tin kiên định vào lí tưởng cách mạng."
+            },
+            {
+                question: "Câu 8. Vì sao có thể nói nỗi nhớ trong bài thơ không chỉ dừng lại ở tình yêu quê hương?",
+                options: [
+                    "A. Vì nỗi nhớ còn thể hiện tình yêu nhân dân và khát vọng cách mạng.",
+                    "B. Vì tác giả chủ yếu muốn miêu tả cảnh đẹp thiên nhiên.",
+                    "C. Vì nỗi nhớ hướng đến những địa danh xa lạ.",
+                    "D. Vì nhân vật trữ tình muốn từ bỏ cuộc sống hiện tại."
+                ],
+                correct: 0, // Choice A
+                explanation: "Nỗi nhớ trong 'Nhớ đồng' đã vượt lên trên nỗi nhớ quê hương thông thường để trở thành tình yêu nhân dân lao động và khao khát thoát khỏi ngục tù để tiếp tục chiến đấu cho tự do."
+            },
+            {
+                question: "Câu 9. Cách tổ chức các hình ảnh trong bài thơ nhằm thể hiện điều gì?",
+                options: [
+                    "A. Các hình ảnh xuất hiện độc lập, không có mối liên hệ.",
+                    "B. Nỗi nhớ phát triển theo dòng liên tưởng, từ cảnh quê đến con người và tâm trạng.",
+                    "C. Các hình ảnh được sắp xếp hoàn toàn theo trình tự thời gian.",
+                    "D. Cảm xúc của nhân vật không có sự vận động."
+                ],
+                correct: 1, // Choice B
+                explanation: "Hệ thống hình ảnh được liên kết chặt chẽ theo mạch liên tưởng tự nhiên của tâm lý: cảnh vật gợi nhớ con người, từ đó khơi dậy những hoài niệm về ngày đầu giác ngộ lí tưởng."
+            },
+            {
+                question: "Câu 10. Thông điệp sâu sắc nhất có thể rút ra từ bài thơ là gì?",
+                options: [
+                    "A. Quá khứ luôn có ý nghĩa hơn hiện tại.",
+                    "B. Con người chỉ tìm thấy hạnh phúc khi được sống ở quê nhà.",
+                    "C. Tình yêu quê hương và nhân dân có thể trở thành sức mạnh tinh thần, nâng đỡ lí tưởng sống.",
+                    "D. Khi gặp khó khăn, con người nên tránh xa những mối quan hệ xã hội."
+                ],
+                correct: 2, // Choice C
+                explanation: "Bài thơ mang thông điệp nhân văn: Tình yêu quê hương đất nước và sự gắn bó với nhân dân chính là điểm tựa tinh thần vững chắc, nâng đỡ niềm tin và lý tưởng sống cao đẹp của mỗi con người."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userSelected = null;
+
+        // Sound Audio Effects (Web Audio API synth)
+        let audioCtx = null;
+        let isSoundPlaying = false;
+        let noiseNode = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSoundEffect(type) {
+            initAudio();
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15); // E5
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime); // A3
+                osc.frequency.exponentialRampToValueAtTime(146.83, audioCtx.currentTime + 0.2); // D3
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        function toggleAmbience() {
+            initAudio();
+            const icon = document.getElementById('sound-icon');
+            const text = document.getElementById('sound-text');
+
+            if (!isSoundPlaying) {
+                // Play soft wind/rain noise sound via Web Audio API
+                const bufferSize = audioCtx.sampleRate * 2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const output = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+
+                noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+                noiseNode.loop = true;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
+
+                noiseNode.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                noiseNode.start();
+                isSoundPlaying = true;
+
+                icon.className = "fa-solid fa-volume-high text-vintage-700";
+                text.innerText = "Gió nhẹ hiu hắt";
+            } else {
+                if (noiseNode) {
+                    noiseNode.stop();
+                    noiseNode.disconnect();
+                }
+                isSoundPlaying = false;
+                icon.className = "fa-solid fa-volume-xmark text-vintage-700";
+                text.innerText = "Âm thanh thiên nhiên";
+            }
+        }
+
+        // Render Question
+        function renderQuestion() {
+            userSelected = null;
+            const q = questionsData[currentQuestion];
+            
+            // Progress Update
+            document.getElementById("question-tracker").innerText = `Câu hỏi ${currentQuestion + 1} / ${questionsData.length}`;
+            const progressPercent = ((currentQuestion + 1) / questionsData.length) * 100;
+            document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+
+            // Question Text
+            document.getElementById("question-text").innerText = q.question;
+
+            // Options rendering
+            const container = document.getElementById("options-container");
+            container.innerHTML = "";
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn w-full text-left p-4 rounded-xl border border-vintage-300 bg-vintage-50 text-vintage-900 font-serif text-sm sm:text-base flex items-start gap-3 shadow-sm";
+                btn.setAttribute("onclick", `selectOption(${idx})`);
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full bg-vintage-200 border border-vintage-400 text-vintage-800 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        ${String.fromCharCode(65 + idx)}
+                    </span>
+                    <span class="leading-relaxed">${opt.substring(3)}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Reset Feedback & Next Button State
+            document.getElementById("feedback-container").className = "hidden rounded-xl p-5 mb-6 fade-in border";
+            const nextBtn = document.getElementById("next-btn");
+            nextBtn.disabled = true;
+            nextBtn.className = "w-full sm:w-auto px-8 py-3 bg-vintage-300 text-vintage-500 font-bold rounded-xl shadow cursor-not-allowed opacity-60 flex items-center justify-center gap-2 transition duration-200";
+        }
+
+        // Handle Option Selection
+        function selectOption(index) {
+            if (userSelected !== null) return; // Prevent changing choice
+            
+            userSelected = index;
+            const q = questionsData[currentQuestion];
+            const container = document.getElementById("options-container");
+            const buttons = container.children;
+
+            // Disable all buttons
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.remove("hover:bg-vintage-200", "hover:border-vintage-400");
+            }
+
+            const feedbackContainer = document.getElementById("feedback-container");
+            const feedbackIcon = document.getElementById("feedback-icon");
+            const feedbackTitle = document.getElementById("feedback-title");
+            const explanationText = document.getElementById("explanation-text");
+
+            if (index === q.correct) {
+                score++;
+                document.getElementById("score-badge").innerText = `${score} / ${questionsData.length}`;
+                playSoundEffect('correct');
+
+                // Style clicked button (Correct)
+                buttons[index].className = "option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/90 text-emerald-900 font-serif text-sm sm:text-base flex items-start gap-3 shadow-md";
+                buttons[index].querySelector('span').className = "w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5";
+
+                // Feedback UI
+                feedbackContainer.className = "rounded-xl p-5 mb-6 fade-in border border-emerald-300 bg-emerald-50 text-emerald-900";
+                feedbackIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+                feedbackTitle.innerText = "Chính xác!";
+            } else {
+                playSoundEffect('wrong');
+
+                // Style clicked button (Wrong)
+                buttons[index].className = "option-btn w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-serif text-sm sm:text-base flex items-start gap-3 shadow-sm";
+                buttons[index].querySelector('span').className = "w-6 h-6 rounded-full bg-rose-500 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5";
+
+                // Highlight Correct Answer
+                buttons[q.correct].className = "option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-900 font-serif text-sm sm:text-base flex items-start gap-3 shadow-sm";
+                buttons[q.correct].querySelector('span').className = "w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5";
+
+                // Feedback UI
+                feedbackContainer.className = "rounded-xl p-5 mb-6 fade-in border border-rose-300 bg-rose-50 text-rose-900";
+                feedbackIcon.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i>`;
+                feedbackTitle.innerText = "Chưa chính xác!";
+            }
+
+            explanationText.innerText = q.explanation;
+            feedbackContainer.classList.remove("hidden");
+
+            // Enable Next Button
+            const nextBtn = document.getElementById("next-btn");
+            nextBtn.disabled = false;
+            nextBtn.className = "w-full sm:w-auto px-8 py-3 bg-vintage-700 hover:bg-vintage-800 text-vintage-50 font-bold rounded-xl shadow cursor-pointer flex items-center justify-center gap-2 transition duration-200 transform hover:-translate-y-0.5";
+            
+            if (currentQuestion === questionsData.length - 1) {
+                nextBtn.querySelector("span").innerText = "Xem Kết Quả";
+            }
+        }
+
+        // Next Question Handler
+        function nextQuestion() {
+            if (userSelected === null) return;
+
+            currentQuestion++;
+            if (currentQuestion < questionsData.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show Final Results & Evaluation
+        function showResults() {
+            document.getElementById("quiz-screen").classList.add("hidden");
+            document.getElementById("result-screen").classList.remove("hidden");
+
+            const finalDisplay = document.getElementById("final-score-display");
+            const accuracyDisplay = document.getElementById("accuracy-rate");
+            const evaluationText = document.getElementById("evaluation-text");
+
+            finalDisplay.innerText = `${score}/10`;
+            const accuracy = (score / questionsData.length) * 100;
+            accuracyDisplay.innerText = `Tỉ lệ chính xác: ${accuracy}%`;
+
+            let evalMsg = "";
+            if (score === 10) {
+                evalMsg = "Tuyệt vời! Bạn nắm vững hoàn hảo kiến thức tác phẩm 'Nhớ đồng'. Bạn thấu hiểu sâu sắc từ mạch cảm xúc, nghệ thuật biểu đạt đến lí tưởng cách mạng cao đẹp của nhà thơ Tố Hữu trong chương trình Ngữ văn 11.";
+            } else if (score >= 8) {
+                evalMsg = "Rất tốt! Bạn có nền tảng kiến thức rất vững chắc về bài thơ, cảm nhận tinh tế nỗi nhớ da diết và tâm hồn người chiến sĩ trẻ.";
+            } else if (score >= 5) {
+                evalMsg = "Khá tốt! Bạn đã nắm được những nội dung cơ bản của bài thơ. Đọc lại tác phẩm một chút nữa để cảm nhận trọn vẹn hơn nhé.";
+            } else {
+                evalMsg = "Bạn cần dành thêm thời gian đọc kỹ bài thơ và phần phân tích tác phẩm 'Nhớ đồng' để củng cố lại kiến thức.";
+            }
+
+            evaluationText.innerText = evalMsg;
+        }
+
+        // Restart Quiz Handler
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("score-badge").innerText = `0 / ${questionsData.length}`;
+            document.getElementById("result-screen").classList.add("hidden");
+            document.getElementById("quiz-screen").classList.remove("hidden");
+            renderQuestion();
+        }
+
+        // Start Quiz on page load
+        window.onload = function() {
+            renderQuestion();
+        };
+    </script>
+</body>
+</html>
